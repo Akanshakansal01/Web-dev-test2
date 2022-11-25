@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <style>
+        *{
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+root{
+    background-color: var(--radio-color);
+    /* background-color: pink;  */
+}
+
+section{
+    padding: 50px 150px;
+}
+body{
+    background-color: var(--radio-color);
+}
+
+main{
+    border: 5px solid var(--radio-color);
+    background-color: white;
+}
+h1{
+    text-align: center;
+    font-size: 50px;
+    color: var(--radio-color);
+    text-decoration: underline;
+}
+
+input[type="text"]
+{
+    height: 40px;
+    padding: 10px;
+    font-size: 30px;
+}
+button{
+    font-size: 30px;
+}
+.form-control{
+    margin:50px;
+    /* border: 0; */
+    /* background-color: rgb(170, 222, 238); */
+    text-align: center;
+    border-color:var(--radio-color); 
+}
+fieldset{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+.theme{
+    align-items: center;
+    display: flex;
+    height: 100px;;
+    width: 500px;
+    justify-content: space-evenly;
+    background-color: white;
+  }
+
+
+.color-changer{
+    display:flex;
+    gap:20px;
+    padding:10px;
+    width: fit-content;
+    /* border: 0; */
+    margin-inline: auto;
+    /* background-color: white; */
+}
+
+.api{
+    padding: 20px 10px;
+}
+
+input[type="radio"]{
+    appearance: none;
+    height: 30px;
+    width:30px;
+    border: 2px solid;
+    border-radius: 50%;
+    cursor:pointer;
+}
+
+input[type="radio"]:checked
+{
+    background-color: var(--radio-color);
+}
+
+#babyPink{
+    --radio-color:grey;
+    border: 3px solid grey;
+}
+#lightgreen{
+    --radio-color:rgb(243, 212, 217);
+    border: 3px solid pink;
+}
+#light{
+    --radio-color:rgb(170, 222, 238);
+    border: 3px solid blue;
+}
+#dark{
+    --radio-color:rgb(122, 233, 122);
+    border: 3px solid green;
+}
+#orange{
+    --radio-color:black;
+    border: 3px solid black;
+}
+:root:has(#lightgreen:checked){
+    background-color: rgb(243, 212, 217);
+}
+:root:has(#light:checked){
+    background-color:rgb(170, 222, 238) ;
+}
+:root:has(#dark:checked){
+    background-color: rgb(122, 233, 122);
+}
+:root:has(#orange:checked){
+    background-color: black;
+}
+:root:has(#babyPink:checked){
+    background-color: grey;
+}
+    </style>
+</head>
+<body>
+
+    <section>
+        <main>
+        <h1>SEARCH YOUR FAVOURITE MOVIES</h1>
+        <div class="api"></div>
+        <input type="text" placeholder="Search here..." id="search">
+        <button id="start">Search</button>
+    </main>
+    </section>
+<br><br>
+<div class="theme">
+    <form class="form-control">
+        <fieldset>
+          <legend></legend>
+
+          <label for="light"></label>
+          <input type="radio" name="theme" id="light" checked>
+
+          <label for="lightgreen"></label>
+          <input type="radio" name="theme" id="lightgreen">
+
+          <label for="orange"></label>
+          <input type="radio" name="theme" id="orange">
+
+          <label for="babyPink"></label>
+          <input type="radio" name="theme" id="babyPink">
+
+          <label for="dark"></label>
+          <input type="radio" name="theme" id="dark">
+
+        </fieldset>
+      </form>
+    </div>
+
+      <!-- <script src="./main.js"></script> -->
+      <script>
+        themeColour = document.querySelectorAll('[name="theme"]');
+      themeColour.forEach((theme) => {
+        theme.addEventListener("click",()=> localStorage.setItem("theme",theme.id));
+      });
+
+  function store() {
+  store = localStorage.getItem("theme");
+  themeColour.forEach((theme) => {
+    if (theme.id === store) {
+      theme.checked = true;
+    }
+  });
+}
+document.onload = store();
+document.getElementById('start').addEventListener("click",display);
+
+function display(){
+    var visit=document.getElementById('search').value;
+    req(visit);
+}
+var data;
+function req(api){
+    const url="https://api.tvmaze.com/search/shows?q=";
+    const api=new XMLHttpRequest;
+    api.onload=function(){
+        data=this.response;
+        // data.forEach((d)=>{
+        //     console.log(data);
+        // })
+        console.log(data);
+        var ch=document.getElementById('m');
+        var div=document.createElement('div');
+        ch.endChild(div);
+        div.className='movies';
+        
+    }
+    api.onerror=function(){
+        console.log('error');
+    }
+    api.open("GET",url+api);
+    api.send();
+    
+}      
+      </script>
+</body>
+</html>
