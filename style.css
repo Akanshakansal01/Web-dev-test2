@@ -17,7 +17,7 @@ body{
     background-color: var(--radio-color);
 }
 
-main{
+.main{
     border: 5px solid var(--radio-color);
     background-color: white;
 }
@@ -122,4 +122,18 @@ input[type="radio"]:checked
 }
 :root:has(#babyPink:checked){
     background-color: grey;
+}
+article{
+    padding: 20px;
+    border: 3px solid var(--radio-color);
+    display: flex;
+    flex-wrap: wrap;
+}
+.mov{
+    height: 200x;
+    width: 150px;
+}
+.img{
+    height: 100%;
+    width: 100%;
 }
